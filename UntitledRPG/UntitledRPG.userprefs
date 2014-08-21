@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\Desktop\WitchHunt\Assets\Scripts\PlayerMovement.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CameraFollow.cs">
     <Files>
-      <File FileName="..\..\Desktop\WitchHunt\Assets\Scripts\PlayerMovement.cs" Line="40" Column="17" />
+      <File FileName="Assets\Scripts\PlayerMovement.cs" Line="18" Column="3" />
+      <File FileName="Assets\Scripts\NPC.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CameraFollow.cs" Line="33" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
