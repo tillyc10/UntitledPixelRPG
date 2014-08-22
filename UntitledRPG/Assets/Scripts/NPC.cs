@@ -44,6 +44,7 @@ public class NPC : MonoBehaviour {
 			if( GUI.Button( new Rect( Screen.width/2 - 50, (Screen.height/5) * 3, 100, 50 ), "Buy"))
 			{
 				bShop = 2;
+				bTalk = false;
 			}
 			else					
 				counter += Time.deltaTime;
@@ -51,15 +52,18 @@ public class NPC : MonoBehaviour {
 			if( GUI.Button( new Rect( Screen.width/2 - 50, (Screen.height/4) * 3, 100, 50 ), "Sell"))
 			{
 				bShop = 3;
+				bTalk = false;
 			}				
 			else
 				counter += Time.deltaTime;
 		}
 		if(bShop == 2) 
 		{
-			if( GUI.Button( new Rect( Screen.width/2 - 125, (Screen.height/5) * 3, 250, 50 ), "Sorry you don't have any money"))
+			if( GUI.Button( new Rect( Screen.width/2 - 125, (Screen.height/5) * 3, 250, 50 ), "Thanks!"))
 			{
 				bShop = 0;
+				AdjustGoldAmount(-5);
+				bTalk = false;
 			}
 		}
 		if (bShop == 3) 
@@ -67,11 +71,13 @@ public class NPC : MonoBehaviour {
 			if( GUI.Button( new Rect( Screen.width/2 - 125, (Screen.height/5) * 3, 260, 50 ), "Sorry you don't have an Inventory just yet"))
 			{
 				bShop = 0;
+				bTalk = false;
 			}
 		}
 		if ( counter >= 5 )
 		{
 			bShop = 0;
+			bTalkShop = false;
 			counter = 0;
 		}
 
@@ -91,7 +97,6 @@ public class NPC : MonoBehaviour {
 			if ( counter >= 5 )
 			{
 				bTalk = false;
-				bTalkShop = false;
 				counter = 0;
 			}
 		}
