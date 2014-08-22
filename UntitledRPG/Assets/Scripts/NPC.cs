@@ -8,6 +8,7 @@ public class NPC : MonoBehaviour {
 	private int bAdvance;
 	private int bShop;
 	private float counter;
+	public PlayerGold pGold;
 
 	// Use this for initialization
 	void Start () {
@@ -46,8 +47,7 @@ public class NPC : MonoBehaviour {
 				bShop = 2;
 				bTalk = false;
 
-				PlayerGold buy = (PlayerGold)gameObject.GetComponent("PlayerGold");
-				buy.AdjustGoldAmount(-5);
+				pGold.AdjustGoldAmount(-5);
 			}
 			else					
 				counter += Time.deltaTime;
@@ -56,7 +56,6 @@ public class NPC : MonoBehaviour {
 			{
 				bShop = 3;
 				bTalk = false;
-
 			}				
 			else
 				counter += Time.deltaTime;
