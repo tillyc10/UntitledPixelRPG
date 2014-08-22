@@ -45,6 +45,9 @@ public class NPC : MonoBehaviour {
 			{
 				bShop = 2;
 				bTalk = false;
+
+				PlayerGold buy = (PlayerGold)gameObject.GetComponent("PlayerGold");
+				buy.AdjustGoldAmount(-5);
 			}
 			else					
 				counter += Time.deltaTime;
@@ -53,17 +56,19 @@ public class NPC : MonoBehaviour {
 			{
 				bShop = 3;
 				bTalk = false;
+
 			}				
 			else
 				counter += Time.deltaTime;
 		}
 		if(bShop == 2) 
 		{
-			if( GUI.Button( new Rect( Screen.width/2 - 125, (Screen.height/5) * 3, 250, 50 ), "Thanks!"))
+			if( GUI.Button( new Rect( Screen.width/2 - 125, (Screen.height/5) * 3, 250, 50 ), "Thanks,Bye!"))
 			{
 				bShop = 0;
-				AdjustGoldAmount(-5);
 				bTalk = false;
+
+
 			}
 		}
 		if (bShop == 3) 
