@@ -4,10 +4,15 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour {
 
 	public float walkSpeed;
-
 	private float curHeld;
 	private float recentPress;
+	public Transform Hero;
 
+
+	void Awake ()
+	{
+		DontDestroyOnLoad (Hero);
+	}
 	void Start()
 	{
 
