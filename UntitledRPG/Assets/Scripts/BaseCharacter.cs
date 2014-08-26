@@ -67,7 +67,7 @@ public class BaseCharacter : MonoBehaviour {
 	{
 		for (int cnt = 0; cnt < _primaryAttribute.Length; cnt++) 
 		{
-			_primaryAttribute[cnt] = new Attribute();
+			//_primaryAttribute[cnt] = new Attribute();
 		}
 	}
 
@@ -104,7 +104,7 @@ public class BaseCharacter : MonoBehaviour {
 	{
 		//health
 		ModifyingAttribute health = new ModifyingAttribute ();
-		health.attribute = GetPrimaryAttribute ((int)AttributeName.STR);
+		//health.attribute = GetPrimaryAttribute ((int)AttributeName.STR);
 		health.ratio = .5f;
 
 		GetResource ((int)ResourceName.Health).AddModifier (health);
