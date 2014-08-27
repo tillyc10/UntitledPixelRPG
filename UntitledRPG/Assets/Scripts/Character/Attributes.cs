@@ -2,8 +2,7 @@
 
 	public Attributes()
 	{
-		ExpToLevel = 50;
-		LevelModifier = 1.05f;
+
 	}
 }
 
