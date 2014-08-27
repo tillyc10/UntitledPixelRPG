@@ -51,6 +51,32 @@ public class Inventory : MonoBehaviour {
 		Selector[3] = "Weapons";
 	}
 
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		Item thisItem;
+
+		if ( other.gameObject.tag == "Item" )
+		{
+			thisItem = other.gameObject.GetComponent<Item>();
+
+			if ( thisItem.type.ToString() == "item"  )
+			{
+				items.Add ( thisItem );
+			}
+			else if ( thisItem.type.ToString() == "weapon" )
+			{
+				weapons.Add ( thisItem );
+			}
+			else if ( thisItem.type.ToString() == "helm" || thisItem.type.ToString() == "chest" ||
+			         thisItem.type.ToString() == "arms" || thisItem.type.ToString() == "legs")
+			{
+				armor.Add ( thisItem );
+			}
+
+			Destroy( other.gameObject );
+		}
+	}
+
 	// Drawing to the HUD
 	void OnGUI()
 	{
@@ -64,21 +90,6 @@ public class Inventory : MonoBehaviour {
 	public void InventoryWindow(int ID)
 	{
 		int cnt = 0;
-
-		/*for ( int y = 0; y < inventoryRows; y++ )
-		{
-			for ( int x = 0; x < inventoryCols; x++ )
-			{
-				if ( cnt < items.Count )
-				{
-					GUI.Button ( new Rect(5 + (x * buttonWidth), 20 + (y * buttonHeight), buttonWidth, buttonHeight ), ( x + y * inventoryCols).ToString());
-				}
-				else
-					GUI.Label ( new Rect(5 + (x * buttonWidth), 20 + (y * buttonHeight), buttonWidth, buttonHeight ), "none", "box");
-
-				cnt++;
-			}
-		}*/
 
 		// Drawing the selection buttons to view different types of items in the inventory
 		for ( int topRow = 0; topRow < selectorRows; topRow++ )
