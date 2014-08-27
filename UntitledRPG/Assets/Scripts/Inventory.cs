@@ -51,6 +51,32 @@ public class Inventory : MonoBehaviour {
 		Selector[3] = "Weapons";
 	}
 
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		Item thisItem;
+
+		if ( other.gameObject.tag == "Item" )
+		{
+			thisItem = other.gameObject.GetComponent<Item>();
+
+			if ( thisItem.type.ToString() == "item"  )
+			{
+				items.Add ( thisItem );
+			}
+			else if ( thisItem.type.ToString() == "weapon" )
+			{
+				weapons.Add ( thisItem );
+			}
+			else if ( thisItem.type.ToString() == "helm" || thisItem.type.ToString() == "chest" ||
+			         thisItem.type.ToString() == "arms" || thisItem.type.ToString() == "legs")
+			{
+				armor.Add ( thisItem );
+			}
+
+			Destroy( other.gameObject );
+		}
+	}
+
 	// Drawing to the HUD
 	void OnGUI()
 	{

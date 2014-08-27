@@ -15,6 +15,7 @@ public class Item : MonoBehaviour {
 		chest,
 		legs,
 		weapon,
+		item
 	}
 
 	public enum Rarity {
