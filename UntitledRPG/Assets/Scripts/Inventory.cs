@@ -65,21 +65,6 @@ public class Inventory : MonoBehaviour {
 	{
 		int cnt = 0;
 
-		/*for ( int y = 0; y < inventoryRows; y++ )
-		{
-			for ( int x = 0; x < inventoryCols; x++ )
-			{
-				if ( cnt < items.Count )
-				{
-					GUI.Button ( new Rect(5 + (x * buttonWidth), 20 + (y * buttonHeight), buttonWidth, buttonHeight ), ( x + y * inventoryCols).ToString());
-				}
-				else
-					GUI.Label ( new Rect(5 + (x * buttonWidth), 20 + (y * buttonHeight), buttonWidth, buttonHeight ), "none", "box");
-
-				cnt++;
-			}
-		}*/
-
 		// Drawing the selection buttons to view different types of items in the inventory
 		for ( int topRow = 0; topRow < selectorRows; topRow++ )
 		{
