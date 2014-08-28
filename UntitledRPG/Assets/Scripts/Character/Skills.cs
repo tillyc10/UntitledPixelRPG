@@ -1,12 +1,13 @@
-﻿public class Skills : ModifiedStats {
+﻿using UnityEngine;
+using System.Collections;
+
+
+public class Skills :  MonoBehaviour{
 	private bool _known;
 
 	public Skills()
 	{
 		_known = false;
-		ExpToLevel = 25;
-		LevelModifier = 1.1f;
-
 	}
 
 	public bool Known

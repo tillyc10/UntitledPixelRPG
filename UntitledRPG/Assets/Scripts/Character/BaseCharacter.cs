@@ -7,8 +7,7 @@ public class BaseCharacter : MonoBehaviour {
 	private int _level;
 	private uint _freeExp;
 
-	private Attribute[] _primaryAttribute;
-	private Resource[] _resource;
+	private Attributes[] _primaryAttribute;
 	private Skills[] _skills;
 
 
@@ -18,8 +17,8 @@ public class BaseCharacter : MonoBehaviour {
 		_level = 0;
 		_freeExp = 0;
 
-		_primaryAttribute = new Attribute[Enum.GetValues(typeof(AttributeName)).Length];
-		_resource = new Resource[Enum.GetValues (typeof(ResourceName)).Length];
+		//_primaryAttribute = new Attributes[Enum.GetValues(typeof(AttributeName)).Length];
+		//_resource = new Resource[Enum.GetValues (typeof(ResourceName)).Length];
 		_skills = new Skills[Enum.GetValues (typeof(SkillName)).Length];
 	}
 	// Use this for initialization
@@ -67,17 +66,10 @@ public class BaseCharacter : MonoBehaviour {
 	{
 		for (int cnt = 0; cnt < _primaryAttribute.Length; cnt++) 
 		{
-			//_primaryAttribute[cnt] = new Attribute();
+		//	_primaryAttribute[cnt] = new Attribute();
 		}
 	}
 
-	private void SetupResources()
-	{
-		for (int cnt = 0; cnt < _resource.Length; cnt++) 
-		{
-			_resource[cnt] = new Resource();
-		}
-	}
 
 	private void SetupSkills()
 	{
@@ -87,14 +79,11 @@ public class BaseCharacter : MonoBehaviour {
 		}
 	}
 
-	public Attribute GetPrimaryAttribute(int index)
-	{
-		return _primaryAttribute [index];
-	}
-	public Resource GetResource(int index)
-	{
-		return _resource [index];
-	}
+	//public Attribute GetPrimaryAttribute(int index)
+	//{
+	//	return _primaryAttribute [index];
+	//}
+
 	public Skills GetSkills(int index)
 	{
 		return _skills [index];
@@ -103,11 +92,11 @@ public class BaseCharacter : MonoBehaviour {
 	private void SetupResourceModifiers()
 	{
 		//health
-		ModifyingAttribute health = new ModifyingAttribute ();
+		//ModifyingAttribute health = new ModifyingAttribute ();
 		//health.attribute = GetPrimaryAttribute ((int)AttributeName.STR);
-		health.ratio = .5f;
+		//health.ratio = .5f;
 
-		GetResource ((int)ResourceName.Health).AddModifier (health);
+		//GetResource ((int)ResourceName.Health).AddModifier (health);
 	}
 	
 }

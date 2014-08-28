@@ -1,55 +1,45 @@
-﻿public class BaseStats{
-	private int _baseValue;			//Base value of the stat
-	private int _buffValue;			//Value of armor/weapon buff+base
-	private int _expToLevel;		//exp to level up
-	private float _levelModifier;	//increases xp to level up
+﻿using UnityEngine;
+using System.Collections;
+
+public class BaseStats : MonoBehaviour{
+	public int _buffValue;			//Value of armor/weapon buff+base
+	public int _buffSTR;
+	public int _buffDEX;
+	public int _buffINT;
+	public int _armorClass;
+	public float _baseDamage;
+	public int experience;
+	public int expToLevel=20;
 
 	public BaseStats()
 	{
-		_baseValue = 0;
-		_buffValue = 0;
-		_levelModifier = 1.1f;
-		_expToLevel = 100;
+		_buffSTR = 0;
+		_buffDEX = 0;
+		_buffINT = 0;
+		_armorClass = 0;
+		_baseDamage = 0.0f;
 	}
-
-#region Sets Gets
+	
 	//set/get
-	public int BaseValue
+	public int TotalSTR() 
 	{
-		get{return _baseValue;}
-		set{ _baseValue = value;}
+		Berserker STR = GetComponent<Berserker>();
+		return _buffSTR + STR.baseSTR;
+	}
+	
+	//Dexterity total
+	public int TotalDEX() 
+	{
+		Berserker DEX = GetComponent<Berserker>();
+		return _buffDEX + DEX.baseDEX;
+		
+	}
+	
+	//Intelligence total
+	public int TotalINT() 
+	{
+		Berserker INT = GetComponent<Berserker>();
+		return _buffINT + INT.baseINT;
 	}
 
-	public int BuffValue
-	{
-		get{return _buffValue;}
-		set{ _buffValue = value;}
-	}
-	public int ExpToLevel
-	{
-		get{return _baseValue;}
-		set{ _expToLevel = value;}
-	}
-	public float LevelModifier
-	{
-		get{return _baseValue;}
-		set{ _levelModifier = value;}
-	}
-#endregion
-
-	private int CalcExpToLevel()
-	{
-		return (int)(_expToLevel * _levelModifier);
-	}
-
-	public void LevelUp()
-	{
-		_expToLevel = CalcExpToLevel ();
-		_baseValue++;
-	}
-
-	public int AdjustedStatValue
-	{
-		get{ return _baseValue + _buffValue;}
-	}
 }
