@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class CharacterSelect : MonoBehaviour {
-	private
 	// Use this for initialization
 	void Start () {
 	

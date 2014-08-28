@@ -1,8 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Character\Berserker.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Character\BaseCharacter.cs">
     <Files>
-      <File FileName="Assets\Scripts\Character\Berserker.cs" Line="11" Column="21" />
+      <File FileName="Assets\Scripts\Character\BaseCharacter.cs" Line="10" Column="41" />
+      <File FileName="Assets\Scripts\Character\BaseStats.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Character\Berserker.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CharacterSelect.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -10,7 +13,7 @@
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
               <Node name="Character" expanded="True">
-                <Node name="Berserker.cs" selected="True" />
+                <Node name="BaseCharacter.cs" selected="True" />
               </Node>
             </Node>
           </Node>

@@ -23,23 +23,29 @@ public class BaseStats : MonoBehaviour{
 	//set/get
 	public int TotalSTR() 
 	{
-		Berserker STR = GetComponent<Berserker>();
-		return _buffSTR + STR.baseSTR;
+		Berserker bSTR = GetComponent<Berserker>();
+		Ranger rSTR = GetComponent<Ranger>();
+		Necromancer nSTR = GetComponent<Necromancer>();
+		return _buffSTR + bSTR.baseSTR + rSTR.baseSTR + nSTR.baseSTR;
 	}
 	
 	//Dexterity total
 	public int TotalDEX() 
 	{
-		Berserker DEX = GetComponent<Berserker>();
-		return _buffDEX + DEX.baseDEX;
+		Berserker bDEX = GetComponent<Berserker>();
+		Ranger rDEX = GetComponent<Ranger>();
+		Necromancer nDEX = GetComponent<Necromancer>();
+		return _buffDEX + bDEX.baseDEX + rDEX.baseDEX + nDEX.baseDEX;
 		
 	}
 	
 	//Intelligence total
 	public int TotalINT() 
 	{
-		Berserker INT = GetComponent<Berserker>();
-		return _buffINT + INT.baseINT;
+		Berserker bINT = GetComponent<Berserker>();
+		Ranger rINT = GetComponent<Ranger>();
+		Necromancer nINT = GetComponent<Necromancer>();
+		return _buffINT + bINT.baseINT + rINT.baseINT + nINT.baseINT;
 	}
 
 }
