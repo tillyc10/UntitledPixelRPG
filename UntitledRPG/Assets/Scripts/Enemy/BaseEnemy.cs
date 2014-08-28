@@ -11,24 +11,7 @@ public class BaseEnemy : MonoBehaviour
 	public int enemyDefense;
 	public int enemyGold;
 	public string enemyType;
-
-	public string EnemyType;  
-	{
-		GrimRat,
-		GrimSlime,
-		GrimHornet,
-		GrimBat
-		//full list will go here
-	}
-
-	// Use this for initialization
-	void Start () {
 		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
 
+	
