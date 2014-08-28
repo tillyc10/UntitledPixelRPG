@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class BaseStats : MonoBehaviour{
-	public int _buffValue;			//Value of armor/weapon buff+base
 	public int _buffSTR;
 	public int _buffDEX;
 	public int _buffINT;
@@ -18,6 +17,7 @@ public class BaseStats : MonoBehaviour{
 		_buffINT = 0;
 		_armorClass = 0;
 		_baseDamage = 0.0f;
+		experience=0;
 	}
 	
 	//set/get

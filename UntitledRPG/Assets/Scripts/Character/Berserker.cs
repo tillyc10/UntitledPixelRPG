@@ -8,8 +8,9 @@ public class Berserker : MonoBehaviour
 	public int baseINT=0;
 
 	//Non-additive variables
-	public int level=1;
-
+	public int level=0;
+	public int skillKnown=0;
+	
 	//Leveling Up function
 	private void LevelUp()
 	{
@@ -17,16 +18,18 @@ public class Berserker : MonoBehaviour
 		baseSTR+=2;
 		baseINT++;
 
-		//Typecasts so allow the class to access HP and Resource.
+		//Typecasts to allow the class to access HP and Resource.
 		PlayerHealth health = GetComponent<PlayerHealth>();
 		PlayerResource rage = GetComponent<PlayerResource>();
 
 
 		//Checks divisibilty of 5 and adds Dex accordingly
-		if((level%5) == 0)
+		if((level%5) == 0){
 			baseDEX+=3;
+			skillKnown++;}
 		else
 			baseDEX++;
+
 		//Health scaling
 		if(level < 5)
 			health.maxHealth+=20;
@@ -58,6 +61,12 @@ public class Berserker : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-
+		if(level < 25)
+		{
+			BaseStats exp = GetComponent<BaseStats>();
+			if(exp.experience >= exp.expToLevel){
+				LevelUp();
+				exp.expToLevel = (int)(exp.expToLevel * 1.1f);}
+		}
 	}
 }
