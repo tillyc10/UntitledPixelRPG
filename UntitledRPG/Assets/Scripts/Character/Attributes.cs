@@ -1,4 +1,4 @@
-﻿public class Attributes : BaseStats {
+﻿public class Attributes : ModifiedStats {
 
 	public Attributes()
 	{

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BaseStats : MonoBehaviour{
+public class ModifiedStats : MonoBehaviour{
 	public int _buffSTR;
 	public int _buffDEX;
 	public int _buffINT;
@@ -10,7 +10,7 @@ public class BaseStats : MonoBehaviour{
 	public int experience;
 	public int expToLevel=20;
 
-	public BaseStats()
+	public ModifiedStats()
 	{
 		_buffSTR = 0;
 		_buffDEX = 0;

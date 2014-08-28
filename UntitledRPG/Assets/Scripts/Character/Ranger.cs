@@ -63,7 +63,7 @@ public class Ranger : MonoBehaviour {
 	{
 		if(level < 25)
 		{
-			BaseStats exp = GetComponent<BaseStats>();
+			ModifiedStats exp = GetComponent<ModifiedStats>();
 			if(exp.experience >= exp.expToLevel){
 				LevelUp();
 				exp.expToLevel = (int)(exp.expToLevel * 1.1f);}
