@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour {
 	private float recentPress;
 	public Transform Hero;
 
-
 	void Awake ()
 	{
 		DontDestroyOnLoad (Hero);
