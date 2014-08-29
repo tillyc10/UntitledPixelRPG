@@ -26,15 +26,16 @@ public class Inventory : MonoBehaviour {
 	private const int InventoryWindowID = 0;
 
 	// Lists to hold current inventory based on item type
-	private List<Item> items = new List<Item>();
-	private List<Item> weapons = new List<Item>();
-	private List<Item> armor = new List<Item>();
+	public List<Item> items = new List<Item>();
+	public List<Item> weapons = new List<Item>();
+	public List<Item> armor = new List<Item>();
 
 	// Array holding the inventory selectors
 	private string[] Selector = new string[4];
 
-	// Array to hold the equipped items
-	private Item[] equippedItems = new Item[4];
+	// Array to hold the equipped items - 0 = helm, 1 = chest, 2 = legs, 3 = weapon
+	public Item[] equippedItems = new Item[4];
+	private int equippedCount;
 
 	// Bools to determine which "sub" inventory to show (based on selector buttons)
 	private bool bShowEquipped;
@@ -48,9 +49,11 @@ public class Inventory : MonoBehaviour {
 		Selector[0] = "Equipped";
 		Selector[1] = "Items";
 		Selector[2] = "Armor";
-		Selector[3] = "Weapons";
+		Selector[3] = "Weapons"; 
 	}
 
+	// ------------------------------------------------------------------------------------------------------------
+	// Add new item to proper location in inventory	
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		Item thisItem;
@@ -71,12 +74,14 @@ public class Inventory : MonoBehaviour {
 			         thisItem.type.ToString() == "arms" || thisItem.type.ToString() == "legs")
 			{
 				armor.Add ( thisItem );
+				//print ( armor[0] );
 			}
 
 			Destroy( other.gameObject );
 		}
 	}
 
+	// ------------------------------------------------------------------------------------------------------------
 	// Drawing to the HUD
 	void OnGUI()
 	{
@@ -86,6 +91,7 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
+	// ------------------------------------------------------------------------------------------------------------
 	// The inventory window
 	public void InventoryWindow(int ID)
 	{
@@ -94,6 +100,7 @@ public class Inventory : MonoBehaviour {
 		// Drawing the selection buttons to view different types of items in the inventory
 		for ( int topRow = 0; topRow < selectorRows; topRow++ )
 		{
+			// Handle which selector button is pressed
 			if ( GUI.Button ( new Rect ( 35 + ( topRow * selectorWidth), 20, selectorWidth, selectorHeight), "" + Selector[topRow] ) )
 			{
 				if ( Selector[topRow] == "Equipped" )
@@ -139,30 +146,40 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 
+		// if we want to show the currently equipped items
 		if ( bShowEquipped )
 		{
 			for ( int x = 0; x < equippedItems.Length; x++ )
 			{
-				//print ( equippedItems[x]);
-				if ( equippedItems[x] != null )
+				// if we have items to show
+				if ( x < equippedCount )
 				{
-					
+					GUI.Button ( new Rect (20 + (x * buttonWidth), 65, buttonWidth, buttonHeight ), x.ToString());
+
+					if ( x == 3 )
+					{
+
+					}
 				}
+				// we dont have items to show
 				else
 					GUI.Label ( new Rect (20 + (x * buttonWidth), 65, buttonWidth, buttonHeight ), "none", "box");
 			}
 		}
 
+		// if we want to show the general items that arent currently equipped
 		if ( bShowItems )
 		{
 			for ( int y = 0; y < inventoryRows; y++ )
 			{
 				for ( int x = 0; x < inventoryCols; x++ )
 				{
+					// if we have items to show
 					if ( cnt < items.Count )
 					{
 						GUI.Button ( new Rect(20 + (x * buttonWidth), 65 + (y * buttonHeight), buttonWidth, buttonHeight ), ( x + y * inventoryCols).ToString());
 					}
+					// we dont have items to show
 					else
 						GUI.Label ( new Rect(20 + (x * buttonWidth), 65 + (y * buttonHeight), buttonWidth, buttonHeight ), "none", "box");
 					
@@ -171,16 +188,23 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 
+		// if we want to show the armor that is not equipped
 		if ( bShowArmor )
 		{
 			for ( int y = 0; y < inventoryRows; y++ )
 			{
 				for ( int x = 0; x < inventoryCols; x++ )
 				{
+					// if we have items to show
 					if ( cnt < armor.Count )
 					{
-						GUI.Button ( new Rect(20 + (x * buttonWidth), 65 + (y * buttonHeight), buttonWidth, buttonHeight ), ( x + y * inventoryCols).ToString());
+						if ( GUI.Button ( new Rect(20 + (x * buttonWidth), 65 + (y * buttonHeight), buttonWidth, buttonHeight ), ( x + y * inventoryCols).ToString()) )
+						{
+							EquipArmor( x + y * inventoryCols );
+							//print ( x + y * inventoryCols );
+						}
 					}
+					// we dont have items to show
 					else
 						GUI.Label ( new Rect(20 + (x * buttonWidth), 65 + (y * buttonHeight), buttonWidth, buttonHeight ), "none", "box");
 					
@@ -189,16 +213,22 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 
+		// if we want to show the weapons that are not equipped
 		if ( bShowWeapons )
 		{
 			for ( int y = 0; y < inventoryRows; y++ )
 			{
 				for ( int x = 0; x < inventoryCols; x++ )
 				{
+					// if we have items to show
 					if ( cnt < weapons.Count )
 					{
-						GUI.Button ( new Rect(20 + (x * buttonWidth), 65 + (y * buttonHeight), buttonWidth, buttonHeight ), ( x + y * inventoryCols).ToString());
+						if ( GUI.Button ( new Rect(20 + (x * buttonWidth), 65 + (y * buttonHeight), buttonWidth, buttonHeight ), ( x + y * inventoryCols).ToString()) )
+						{
+							EquipWeapon ( x + y * inventoryCols );
+						}
 					}
+					// we dont have items to show
 					else
 						GUI.Label ( new Rect(20 + (x * buttonWidth), 65 + (y * buttonHeight), buttonWidth, buttonHeight ), "none", "box");
 					
@@ -208,15 +238,86 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
+	// ------------------------------------------------------------------------------------------------------------
+	// Move armor from inventory to equipped items
+	public void EquipArmor(int placeInList)
+	{
+		ModifiedStats stats = GetComponent<ModifiedStats>();
+
+		int dexBuff = 0;
+		int strBuff = 0;
+		int intBuff = 0;
+		int armorBuff = 0;
+
+		// place the armor in the appropriate slot, here we should also
+		// move the equipped armor to the armor inventory
+		if ( armor[placeInList].type == Item.Type.helm )
+		{
+			equippedItems[0] = armor[placeInList];
+			armor.Remove ( armor[placeInList] );
+		}
+		else if ( armor[placeInList].type == Item.Type.chest )
+		{
+			equippedItems[1] = armor[placeInList];
+			armor.Remove ( armor[placeInList] );
+		}
+		else if ( armor[placeInList].type == Item.Type.legs )
+		{
+			equippedItems[2] = armor[placeInList];
+			armor.Remove ( armor[placeInList] );
+		}
+
+		equippedCount += 1;
+
+		for ( int x = 0; x < equippedItems.Length; x++ )
+		{
+			if ( x < equippedCount )
+			{
+				dexBuff += equippedItems[x].dexBoost;
+				strBuff += equippedItems[x].strBoost;
+				intBuff += equippedItems[x].intBoost;
+				armorBuff += equippedItems[x].armorClass;
+			}
+		}
+
+		stats._buffDEX = dexBuff;
+		stats._buffSTR = strBuff;
+		stats._buffINT = intBuff;
+		stats._armorClass = armorBuff;
+
+		print ( "Dex Buff is " + stats._buffDEX );
+		//print ( "Armor Buff is " + stats._armorClass );
+	}
+
+	// ------------------------------------------------------------------------------------------------------------
+	// Move weapon from inventory to equipped items
+	public void EquipWeapon(int placeInList)
+	{
+		ModifiedStats stats = GetComponent<ModifiedStats>();
+
+		if ( weapons[placeInList].type == Item.Type.weapon )
+		{
+			equippedItems[3] = weapons[placeInList];
+			weapons.Remove( weapons[placeInList] );
+			stats._baseDamage = equippedItems[3].damage; 
+		}
+	}
+
+	// ------------------------------------------------------------------------------------------------------------
 	// To display or not too display...
 	public void ToggleInventoryWindow()
 	{
 		if ( Input.GetKeyUp(KeyCode.I) )
 		{
 			displayInventory = !displayInventory;
+			if ( !bShowEquipped && !bShowArmor && !bShowWeapons && !bShowItems )
+			{
+				bShowEquipped = true;
+			}
 		}
 	}
-	
+
+	// ------------------------------------------------------------------------------------------------------------
 	// Update is called once per frame
 	void Update () {
 	

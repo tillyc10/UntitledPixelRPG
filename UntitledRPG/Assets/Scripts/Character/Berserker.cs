@@ -65,9 +65,9 @@ public class Berserker : MonoBehaviour
 		if(level < 25)
 		{
 			ModifiedStats exp = GetComponent<ModifiedStats>();
-			if(exp.experience >= exp.expToLevel){
-				LevelUp();
-				exp.expToLevel = (int)(exp.expToLevel * 1.1f);}
+			//if(exp.experience >= exp.expToLevel){
+				//LevelUp();
+				//exp.expToLevel = (int)(exp.expToLevel * 1.1f);}
 		}
 	}
 }

@@ -6,6 +6,11 @@ public class Item : MonoBehaviour {
 	
 	public string Name;
 	public string Description;
+	public int dexBoost;
+	public int strBoost;
+	public int intBoost;
+	public int armorClass;
+	public float damage;
 	public Rarity rarity;
 	public Type type;
 
