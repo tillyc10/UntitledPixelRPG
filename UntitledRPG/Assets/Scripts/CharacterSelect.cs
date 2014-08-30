@@ -9,8 +9,12 @@ public class CharacterSelect : MonoBehaviour {
 	public bool bBerSelect=false;
 	public bool bRanSelect=false;
 	public bool bNecSelect=false;
+	public Transform Hero;
 
-
+	void Awake()
+	{
+		DontDestroyOnLoad(Hero);
+	}
 	void OnGUI()
 	{
 		//Main Menu Screen
@@ -65,6 +69,7 @@ public class CharacterSelect : MonoBehaviour {
 			if (GUI.Button (new Rect (Screen.width / 2 , (Screen.height / 2)+55, 100, 50), "Confirm"))
 			{
 				Application.LoadLevel("Test");
+				bBerSelect=false;
 			}
 		}
 
