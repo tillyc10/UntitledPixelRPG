@@ -6,7 +6,6 @@ public class Berserker : MonoBehaviour
 	public int baseSTR=0;
 	public int baseDEX=0;
 	public int baseINT=0;
-	public string pName;
 
 	//Non-additive variables
 	public int level=0;

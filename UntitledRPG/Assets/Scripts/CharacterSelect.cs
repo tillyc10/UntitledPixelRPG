@@ -10,10 +10,14 @@ public class CharacterSelect : MonoBehaviour {
 	public bool bRanSelect=false;
 	public bool bNecSelect=false;
 	public Transform Hero;
+	public Transform Bers;
+	public Transform Necr;
+	public Transform Rang;
 
 	void Awake()
 	{
 		DontDestroyOnLoad(Hero);
+
 	}
 	void OnGUI()
 	{
@@ -60,44 +64,62 @@ public class CharacterSelect : MonoBehaviour {
 		if(bBerSelect)
 		{
 			playerName = GUI.TextField(new Rect(Screen.width/2,Screen.height/2,100,30), playerName,20);
+			if (GUI.Button (new Rect (Screen.width / 2 , (Screen.height / 2)+55, 100, 50), "Confirm"))
+			{
+				Application.LoadLevel("Test");
+				Instantiate(Bers, new Vector3(-1,0,0), Quaternion.identity);
+				bBerSelect=false;
+			}
+
+
 			if (GUI.Button (new Rect (Screen.width / 2 , (Screen.height / 2)+110, 100, 50), "Back"))
 			{
 				bSelect=true;
 				bBerSelect=false;
-				playerName=string.Empty;
+				playerName="Name";
 			}
-			if (GUI.Button (new Rect (Screen.width / 2 , (Screen.height / 2)+55, 100, 50), "Confirm"))
-			{
-				Application.LoadLevel("Test");
-				bBerSelect=false;
-			}
+
 		}
 
 		if(bNecSelect)
 		{
 			playerName = GUI.TextField(new Rect(Screen.width/2,Screen.height/2,100,30), playerName,20);
+			if (GUI.Button (new Rect (Screen.width / 2 , (Screen.height / 2)+55, 100, 50), "Confirm"))
+			{
+				Application.LoadLevel("Test");
+				Instantiate(Necr, new Vector3(-1,0,0), Quaternion.identity);
+				bNecSelect=false;
+			}
+
+
 			if (GUI.Button (new Rect (Screen.width / 2 , (Screen.height / 2)+110, 100, 50), "Back"))
 			{
 				bSelect=true;
 				bNecSelect=false;
-				playerName=string.Empty;
+				playerName="Name";
 			}
+
 		}
 
 		if(bRanSelect)
 		{
+
 			playerName = GUI.TextField(new Rect(Screen.width/2,Screen.height/2,100,30), playerName,20);
+			if (GUI.Button (new Rect (Screen.width / 2 , (Screen.height / 2)+55, 100, 50), "Confirm"))
+			{
+				Application.LoadLevel("Test");
+				Instantiate(Rang, new Vector3(-1,0,0), Quaternion.identity);
+				bRanSelect=false;
+			}
+
 			if (GUI.Button (new Rect (Screen.width / 2 , (Screen.height / 2)+110, 100, 50), "Back"))
 			{
 				bSelect=true;
 				bRanSelect=false;
-				playerName=string.Empty;
+				playerName="Name";
 			}
+
 		}
-
-
-
-
 
 
 	}
