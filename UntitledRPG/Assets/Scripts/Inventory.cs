@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour {
 
 	// Array to hold the equipped items - 0 = helm, 1 = chest, 2 = legs, 3 = weapon
 	public Item[] equippedItems = new Item[4];
-	private int equippedCount;
+	private int equippedCount = 4;
 
 	// Bools to determine which "sub" inventory to show (based on selector buttons)
 	private bool bShowEquipped;
@@ -49,7 +49,7 @@ public class Inventory : MonoBehaviour {
 		Selector[0] = "Equipped";
 		Selector[1] = "Items";
 		Selector[2] = "Armor";
-		Selector[3] = "Weapons"; 
+		Selector[3] = "Weapons";
 	}
 
 	// ------------------------------------------------------------------------------------------------------------
@@ -267,7 +267,7 @@ public class Inventory : MonoBehaviour {
 			armor.Remove ( armor[placeInList] );
 		}
 
-		equippedCount += 1;
+		//equippedCount += 1;
 
 		for ( int x = 0; x < equippedItems.Length; x++ )
 		{
