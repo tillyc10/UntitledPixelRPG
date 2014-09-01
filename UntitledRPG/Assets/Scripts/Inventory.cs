@@ -26,15 +26,15 @@ public class Inventory : MonoBehaviour {
 	private const int InventoryWindowID = 0;
 
 	// Lists to hold current inventory based on item type
-	public List<Item> items = new List<Item>();
-	public List<Item> weapons = new List<Item>();
-	public List<Item> armor = new List<Item>();
+	public List<ItemScript> items = new List<ItemScript>();
+	public List<ItemScript> weapons = new List<ItemScript>();
+	public List<ItemScript> armor = new List<ItemScript>();
 
 	// Array holding the inventory selectors
 	private string[] Selector = new string[4];
 
 	// Array to hold the equipped items - 0 = helm, 1 = chest, 2 = legs, 3 = weapon
-	public Item[] equippedItems = new Item[4];
+	public ItemScript[] equippedItems = new ItemScript[4];
 	private int equippedCount = 4;
 
 	// Bools to determine which "sub" inventory to show (based on selector buttons)
@@ -43,6 +43,8 @@ public class Inventory : MonoBehaviour {
 	private bool bShowWeapons;
 	private bool bShowArmor;
 
+	Item completeItemList;
+
 	// ------------------------------------------------------------------------------------------------------------
 	// Use this for initialization
 	void Start () {
@@ -50,11 +52,13 @@ public class Inventory : MonoBehaviour {
 		Selector[1] = "Items";
 		Selector[2] = "Armor";
 		Selector[3] = "Weapons";
+
+		completeItemList = GetComponent<Item>();
 	}
 
 	// ------------------------------------------------------------------------------------------------------------
 	// Add new item to proper location in inventory	
-	void OnTriggerEnter2D(Collider2D other)
+	/*void OnTriggerEnter2D(Collider2D other)
 	{
 		Item thisItem;
 
@@ -79,7 +83,7 @@ public class Inventory : MonoBehaviour {
 
 			Destroy( other.gameObject );
 		}
-	}
+	}*/
 
 	// ------------------------------------------------------------------------------------------------------------
 	// Drawing to the HUD
@@ -251,7 +255,7 @@ public class Inventory : MonoBehaviour {
 
 		// place the armor in the appropriate slot, here we should also
 		// move the equipped armor to the armor inventory
-		if ( armor[placeInList].type == Item.Type.helm )
+		/*if ( armor[placeInList].type == Item.Type.helm )
 		{
 			equippedItems[0] = armor[placeInList];
 			armor.Remove ( armor[placeInList] );
@@ -278,7 +282,7 @@ public class Inventory : MonoBehaviour {
 				intBuff += equippedItems[x].intBoost;
 				armorBuff += equippedItems[x].armorClass;
 			}
-		}
+		}*/
 
 		stats._buffDEX = dexBuff;
 		stats._buffSTR = strBuff;
@@ -295,12 +299,12 @@ public class Inventory : MonoBehaviour {
 	{
 		ModifiedStats stats = GetComponent<ModifiedStats>();
 
-		if ( weapons[placeInList].type == Item.Type.weapon )
+		/*if ( weapons[placeInList].type == Item.Type.weapon )
 		{
 			equippedItems[3] = weapons[placeInList];
 			weapons.Remove( weapons[placeInList] );
 			stats._baseDamage = equippedItems[3].damage; 
-		}
+		}*/
 	}
 
 	// ------------------------------------------------------------------------------------------------------------
