@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour {
 
 	// Array to hold the equipped items - 0 = helm, 1 = chest, 2 = legs, 3 = weapon
 	public ItemScript[] equippedItems = new ItemScript[4];
-	private int equippedCount = 4;
+	private int equippedCount;
 
 	// Bools to determine which "sub" inventory to show (based on selector buttons)
 	private bool bShowEquipped;
@@ -54,6 +54,10 @@ public class Inventory : MonoBehaviour {
 		Selector[3] = "Weapons";
 
 		completeItemList = GetComponent<Item>();
+
+		equippedItems[1] = completeItemList.tatteredShirt;
+		equippedItems[2] = completeItemList.tatteredPants;
+		equippedItems[3] = completeItemList.rustedSword;
 	}
 
 	// ------------------------------------------------------------------------------------------------------------
@@ -156,7 +160,7 @@ public class Inventory : MonoBehaviour {
 			for ( int x = 0; x < equippedItems.Length; x++ )
 			{
 				// if we have items to show
-				if ( x < equippedCount )
+				if ( equippedItems[x] != null )
 				{
 					GUI.Button ( new Rect (20 + (x * buttonWidth), 65, buttonWidth, buttonHeight ), x.ToString());
 

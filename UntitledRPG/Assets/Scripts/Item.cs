@@ -7,11 +7,11 @@ public class Item : MonoBehaviour {
 	public ItemScript[] itemList = new ItemScript[10];
 
 	// Armor
-	ItemScript tatteredShirt;
-	ItemScript tatteredPants;
+	public ItemScript tatteredShirt;
+	public ItemScript tatteredPants;
 
 	// Weapons
-	ItemScript rustedSword;
+	public ItemScript rustedSword;
 
 	// How much of this item do we have?
 	private int count;
