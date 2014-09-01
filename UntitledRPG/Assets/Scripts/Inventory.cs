@@ -36,6 +36,9 @@ public class Inventory : MonoBehaviour {
 	// Array to hold the equipped items - 0 = helm, 1 = chest, 2 = legs, 3 = weapon
 	public ItemScript[] equippedItems = new ItemScript[4];
 	private int equippedCount;
+	private bool initialEquip;
+	private float timeToLoad;
+	private float timeToEquip = 1;
 
 	// Bools to determine which "sub" inventory to show (based on selector buttons)
 	private bool bShowEquipped;
@@ -43,7 +46,7 @@ public class Inventory : MonoBehaviour {
 	private bool bShowWeapons;
 	private bool bShowArmor;
 
-	Item completeItemList;
+	public Item completeItemList;
 
 	// ------------------------------------------------------------------------------------------------------------
 	// Use this for initialization
@@ -54,10 +57,21 @@ public class Inventory : MonoBehaviour {
 		Selector[3] = "Weapons";
 
 		completeItemList = GetComponent<Item>();
+	}
 
-		equippedItems[1] = completeItemList.tatteredShirt;
-		equippedItems[2] = completeItemList.tatteredPants;
-		equippedItems[3] = completeItemList.rustedSword;
+	void WaitToEquip()
+	{
+		if ( timeToLoad >= timeToEquip )
+		{
+			equippedItems[1] = completeItemList.commonArmor[0];
+			equippedItems[2] = completeItemList.commonArmor[1];
+			equippedItems[3] = completeItemList.commonWeapons[0];
+
+			initialEquip = true;
+			timeToLoad = 0f;
+		}
+		else
+			timeToLoad += Time.deltaTime;
 	}
 
 	// ------------------------------------------------------------------------------------------------------------
@@ -331,5 +345,7 @@ public class Inventory : MonoBehaviour {
 	
 		ToggleInventoryWindow();
 
+		if ( !initialEquip )
+			WaitToEquip();
 	}
 }
