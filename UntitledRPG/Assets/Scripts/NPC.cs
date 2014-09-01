@@ -8,6 +8,9 @@ public class NPC : MonoBehaviour {
 	private int bAdvance;
 	private int bShop;
 	private float counter;
+	private bool bTalkQuest=false;
+	private int bQuest;
+	public string Text;
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +24,7 @@ public class NPC : MonoBehaviour {
 		{
 			bTalk = true;
 			bTalkShop = true;
+			bTalkQuest=true;
 		}
 	}
 
@@ -28,6 +32,30 @@ public class NPC : MonoBehaviour {
 	{
 		GameObject name = GameObject.FindGameObjectWithTag("Info");
 		GameObject gold = GameObject.FindGameObjectWithTag("Player");
+		if(bTalkQuest)
+		{
+			if (GUI.Button (new Rect (Screen.width / 2 - 50, (Screen.height / 3) * 3, 100, 50), "Quest"))
+			{
+				bTalkQuest=false;
+				bTalkShop = false;
+				bTalk = false;
+				counter = 0;
+				bQuest++;1
+			} 
+			else
+				counter += Time.deltaTime;
+		}
+		if(bQuest==1)
+		{
+			if (GUI.Button (new Rect (Screen.width / 2 - 50, (Screen.height / 3) * 3, 100, 50), name.GetComponent<CharacterSelect>().playerName
+			                + " we need your help."))
+			{
+				bQuest++;
+			}
+		}
+		if(bQuest==2)
+			if (GUI.Button (new Rect (Screen.width / 2 - 50, (Screen.height / 3) * 3, 100, 50), Text))
+
 
 		if (bTalkShop) 
 		{
