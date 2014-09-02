@@ -34,27 +34,20 @@ public class Item : MonoBehaviour {
 		//AddToList( tatteredShirt, commonArmor, 0 );
 		//tatteredPants 
 		commonArmor[1] = ItemScript.CreateInstance("Tattered Pants","A badly tattered pair of pants", 0, 0, 0, 0, 1, ItemScript.Rarity.common, ItemScript.Type.legs );
-		//AddToList( tatteredPants, commonArmor, 1 );
 
 		//cleanShirt 
 		commonArmor[2] = ItemScript.CreateInstance("Clean Shirt", "A nicley cleaned shirt", 0, 0, 0, 0, 2, ItemScript.Rarity.common, ItemScript.Type.chest );
-		//AddToList( cleanShirt, commonArmor, 2 );
 		//cleanPants 
 		commonArmor[3] = ItemScript.CreateInstance("Clean Pants", "A nice pair of pants", 0, 0, 0, 0, 2, ItemScript.Rarity.common, ItemScript.Type.legs );
-		//AddToList( cleanPants, commonArmor, 3 );
 		//cleanHat 
 		commonArmor[4] = ItemScript.CreateInstance("Clean Cap", "A clean cap", 0, 0, 0, 0, 1, ItemScript.Rarity.common, ItemScript.Type.helm );
-		//AddToList( cleanHat, commonArmor, 4 );
 
 		//leatherTunic 
 		commonArmor[5] = ItemScript.CreateInstance("Leather Tunic", "A simple leather tunic", 0, 0, 0, 0, 3, ItemScript.Rarity.common, ItemScript.Type.chest );
-		//AddToList( leatherTunic, commonArmor, 5 );
 		//leatherGreaves 
 		commonArmor[6] = ItemScript.CreateInstance("Leather Greaves", "Thick leather greaves", 0, 0, 0, 0, 3, ItemScript.Rarity.common, ItemScript.Type.legs );
-		//AddToList( leatherGreaves, commonArmor, 6 );
 		//leatherCap 
 		commonArmor[7] = ItemScript.CreateInstance("Leather Cap", "A fancy leather cap", 0, 0, 0, 0, 2, ItemScript.Rarity.common, ItemScript.Type.helm );
-		//AddToList( leatherCap, commonArmor, 7 );
 
 		// ----------------------
 		// Uncommon Armor
@@ -339,6 +332,16 @@ public class Item : MonoBehaviour {
 	void AddToList( ItemScript itemToAdd, ItemScript[] listToAddTo, int placeInList )
 	{
 		listToAddTo[placeInList] = itemToAdd;
+	}
+
+	public ItemScript RandomItem( ItemScript[] listToPullFrom )
+	{
+		ItemScript itemToReturn;
+		int random = Random.Range( 0, listToPullFrom.Length );
+
+		itemToReturn = listToPullFrom[random];
+
+		return itemToReturn;
 	}
 
 	// Update is called once per frame

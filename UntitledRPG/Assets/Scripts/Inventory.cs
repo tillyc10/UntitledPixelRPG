@@ -46,6 +46,8 @@ public class Inventory : MonoBehaviour {
 	private bool bShowWeapons;
 	private bool bShowArmor;
 
+	public bool isNearChest;
+
 	public Item completeItemList;
 
 	// ------------------------------------------------------------------------------------------------------------
@@ -110,6 +112,12 @@ public class Inventory : MonoBehaviour {
 		if(displayInventory)
 		{
 			inventoryWindowRect = GUI.Window(InventoryWindowID, inventoryWindowRect, InventoryWindow, "Inventory");
+		}
+
+		if ( isNearChest && !displayInventory )
+		{
+			GUI.Label ( new Rect ( Screen.height * 0.5f, Screen.width * 0.5f, 150, 75 ), "Open", "Box" );
+			print ( "We can open this!" );
 		}
 	}
 

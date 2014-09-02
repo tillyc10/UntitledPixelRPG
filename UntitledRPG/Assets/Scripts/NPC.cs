@@ -40,7 +40,7 @@ public class NPC : MonoBehaviour {
 				bTalkShop = false;
 				bTalk = false;
 				counter = 0;
-				bQuest++;1
+				bQuest++;//1
 			} 
 			else
 				counter += Time.deltaTime;
