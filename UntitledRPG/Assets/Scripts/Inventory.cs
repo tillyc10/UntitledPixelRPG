@@ -72,9 +72,35 @@ public class Inventory : MonoBehaviour {
 	{
 		if ( timeToLoad >= timeToEquip )
 		{
+			ModifiedStats stats = GetComponent<ModifiedStats>();
+			
+			int dexBuff = 0;
+			int strBuff = 0;
+			int intBuff = 0;
+			int armorBuff = 0;
+
 			equippedItems[1] = completeItemList.commonArmor[0];
 			equippedItems[2] = completeItemList.commonArmor[1];
 			equippedItems[3] = completeItemList.commonWeapons[0];
+
+			for ( int x = 0; x < equippedItems.Length; x++ )
+			{
+				if ( equippedItems[x] != null )
+				{
+					dexBuff += equippedItems[x].dexBoost;
+					strBuff += equippedItems[x].strBoost;
+					intBuff += equippedItems[x].intBoost;
+					armorBuff += equippedItems[x].armorClass;
+				}
+			}
+			
+			stats._buffDEX = dexBuff;
+			stats._buffSTR = strBuff;
+			stats._buffINT = intBuff;
+			stats._armorClass = armorBuff;
+
+			if ( equippedItems[3] != null )
+				stats._baseDamage = equippedItems[3].damage; 
 
 			initialEquip = true;
 			timeToLoad = 0f;
@@ -125,7 +151,10 @@ public class Inventory : MonoBehaviour {
 			else
 			{
 				GUI.Label ( new Rect ( 65, 200, 80, 40 ), "Equip", "box" );
-				GUI.Button ( new Rect ( 155, 200, 80, 40 ), "Unequip" );
+
+				if ( GUI.Button ( new Rect ( 155, 200, 80, 40 ), "Unequip" ))
+					Unequip(placeInList);
+
 				GUI.Label ( new Rect ( 245, 200, 80, 40 ), "Delete", "box" );
 			}
 		}
@@ -141,6 +170,15 @@ public class Inventory : MonoBehaviour {
 	// The inventory window
 	public void InventoryWindow(int ID)
 	{
+		ModifiedStats stats = GetComponent<ModifiedStats>();
+
+		int lvlToDisplay;
+		int dexToDisplay = stats.TotalDEX();
+		int strToDisplay = stats.TotalSTR();
+		int intToDisplay = stats.TotalINT();
+		int armorToDisplay = stats._armorClass;
+		float dmgToDisplay = stats._baseDamage;
+
 		int cnt = 0;
 
 		// Drawing the selection buttons to view different types of items in the inventory
@@ -201,6 +239,14 @@ public class Inventory : MonoBehaviour {
 			GUI.Label ( new Rect ( 22, 65, buttonWidth, buttonHeight ), "Armor" );
 			GUI.Label ( new Rect ( 200, 65, 50, buttonHeight ), "Weapon" );
 
+			GUI.Label ( new Rect ( 150, 145, 100, 25 ), "Player Stats", "box" );
+			GUI.Label ( new Rect ( 25, 180, 100, 25 ), "Level: " );
+			GUI.Label ( new Rect ( 25, 195, 100, 25 ), "Dex: " + dexToDisplay );
+			GUI.Label ( new Rect ( 25, 210, 100, 25 ), "Str: " + strToDisplay );
+			GUI.Label ( new Rect ( 25, 225, 100, 25 ), "Int: " + intToDisplay );
+			GUI.Label ( new Rect ( 25, 240, 100, 25 ), "Defense: " + armorToDisplay );
+			GUI.Label ( new Rect ( 25, 255, 100, 25 ), "Damage: " + dmgToDisplay );
+
 			for ( int x = 0; x < equippedItems.Length; x++ )
 			{
 				// if we have items to show
@@ -211,6 +257,7 @@ public class Inventory : MonoBehaviour {
 						if ( GUI.Button ( new Rect (200, 85, buttonWidth, buttonHeight ), x.ToString()) )
 						{
 							clickedItem = equippedItems[x];
+							placeInList = x;
 						}
 					}
 					else
@@ -218,12 +265,20 @@ public class Inventory : MonoBehaviour {
 						if ( GUI.Button ( new Rect (20 + (x * buttonWidth), 85, buttonWidth, buttonHeight ), x.ToString()) )
 						{
 							clickedItem = equippedItems[x];
+							placeInList = x;
 						}
 					}
 				}
 				// we dont have items to show
 				else
-					GUI.Label ( new Rect (20 + (x * buttonWidth), 85, buttonWidth, buttonHeight ), "none", "box");
+				{
+					if ( x == 3 )
+					{
+						GUI.Label ( new Rect (200, 85, buttonWidth, buttonHeight ), "none", "box");
+					}
+					else
+						GUI.Label ( new Rect (20 + (x * buttonWidth), 85, buttonWidth, buttonHeight ), "none", "box");
+				}
 			}
 		}
 
@@ -379,6 +434,50 @@ public class Inventory : MonoBehaviour {
 			weapons.Remove( weapons[which] );
 			stats._baseDamage = equippedItems[3].damage; 
 		}
+	}
+
+	public void Unequip(int which)
+	{
+		ModifiedStats stats = GetComponent<ModifiedStats>();
+		
+		int dexBuff = 0;
+		int strBuff = 0;
+		int intBuff = 0;
+		int armorBuff = 0;
+
+		if ( clickedItem.type == ItemScript.Type.weapon )
+		{
+			weapons.Add( clickedItem );
+			equippedItems[which] = null;
+			clickedItem = null;
+		}
+		else
+		{
+			armor.Add( clickedItem );
+			equippedItems[which] = null;
+			clickedItem = null;
+		}
+
+		for ( int x = 0; x < equippedItems.Length; x++ )
+		{
+			if ( equippedItems[x] != null )
+			{
+				dexBuff += equippedItems[x].dexBoost;
+				strBuff += equippedItems[x].strBoost;
+				intBuff += equippedItems[x].intBoost;
+				armorBuff += equippedItems[x].armorClass;
+			}
+		}
+		
+		stats._buffDEX = dexBuff;
+		stats._buffSTR = strBuff;
+		stats._buffINT = intBuff;
+		stats._armorClass = armorBuff;
+
+		if ( equippedItems[3] != null )
+			stats._baseDamage = equippedItems[3].damage;
+		else
+			stats._baseDamage = 0;
 	}
 
 	// ------------------------------------------------------------------------------------------------------------
