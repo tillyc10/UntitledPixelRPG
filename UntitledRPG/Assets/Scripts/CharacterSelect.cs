@@ -9,6 +9,9 @@ public class CharacterSelect : MonoBehaviour {
 	public bool bBerSelect=false;
 	public bool bRanSelect=false;
 	public bool bNecSelect=false;
+	public bool bNec=false;
+	public bool bRan=false;
+	public bool bBer=false;
 	public Transform Hero;
 	public Transform Bers;
 	public Transform Necr;
@@ -69,6 +72,7 @@ public class CharacterSelect : MonoBehaviour {
 				Application.LoadLevel("Test");
 				Instantiate(Bers, new Vector3(-1,0,0), Quaternion.identity);
 				bBerSelect=false;
+				bBer=true;
 			}
 
 
@@ -89,6 +93,7 @@ public class CharacterSelect : MonoBehaviour {
 				Application.LoadLevel("Test");
 				Instantiate(Necr, new Vector3(-1,0,0), Quaternion.identity);
 				bNecSelect=false;
+				bNec=true;
 			}
 
 
@@ -110,6 +115,7 @@ public class CharacterSelect : MonoBehaviour {
 				Application.LoadLevel("Test");
 				Instantiate(Rang, new Vector3(-1,0,0), Quaternion.identity);
 				bRanSelect=false;
+				bRan=true;
 			}
 
 			if (GUI.Button (new Rect (Screen.width / 2 , (Screen.height / 2)+110, 100, 50), "Back"))
