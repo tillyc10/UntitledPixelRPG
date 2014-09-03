@@ -57,6 +57,8 @@ public class Inventory : MonoBehaviour {
 
 	public Item completeItemList;
 
+	private Texture2D berserkerTex;
+
 	// ------------------------------------------------------------------------------------------------------------
 	// Use this for initialization
 	void Start () {
@@ -68,6 +70,8 @@ public class Inventory : MonoBehaviour {
 		completeItemList = GetComponent<Item>();
 	}
 
+	// ------------------------------------------------------------------------------------------------------------
+	// Equip the initial gear, but give time to generate the item list
 	void WaitToEquip()
 	{
 		if ( timeToLoad >= timeToEquip )
@@ -120,6 +124,8 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
+	// ------------------------------------------------------------------------------------------------------------
+	// Window to show the description of the item clicked on
 	public void DescriptionWindow(int ID)
 	{
 		if ( clickedItem != null )
@@ -133,10 +139,11 @@ public class Inventory : MonoBehaviour {
 			GUI.Label ( new Rect ( 10, 135, 200, 50 ), "Damage: " + clickedItem.damage );
 			GUI.Label ( new Rect ( 10, 150, 200, 50 ), "Type: " + clickedItem.type );
 			GUI.Label ( new Rect ( 10, 165, 200, 50 ), "Rarity: " + clickedItem.rarity );
+			GUI.Label ( new Rect ( 10, 180, 200, 50 ), "Amount Held: " + clickedItem.stackSize );
 
 			if ( !bShowEquipped )
 			{
-				if ( GUI.Button ( new Rect ( 65, 200, 80, 40 ), "Equip" ) )
+				if ( GUI.Button ( new Rect ( 65, 215, 80, 40 ), "Equip" ) )
 				{
 					if ( clickedItem.type == ItemScript.Type.weapon )
 						EquipWeapon( placeInList );
@@ -145,24 +152,24 @@ public class Inventory : MonoBehaviour {
 
 					//print ( "equipped" );
 				}
-				GUI.Label ( new Rect ( 155, 200, 80, 40 ), "Unequip", "box" );
-				GUI.Button ( new Rect ( 245, 200, 80, 40 ), "Delete" );
+				GUI.Label ( new Rect ( 155, 215, 80, 40 ), "Unequip", "box" );
+				GUI.Button ( new Rect ( 245, 215, 80, 40 ), "Delete" );
 			}
 			else
 			{
-				GUI.Label ( new Rect ( 65, 200, 80, 40 ), "Equip", "box" );
+				GUI.Label ( new Rect ( 65, 215, 80, 40 ), "Equip", "box" );
 
-				if ( GUI.Button ( new Rect ( 155, 200, 80, 40 ), "Unequip" ))
+				if ( GUI.Button ( new Rect ( 155, 215, 80, 40 ), "Unequip" ))
 					Unequip(placeInList);
 
-				GUI.Label ( new Rect ( 245, 200, 80, 40 ), "Delete", "box" );
+				GUI.Label ( new Rect ( 245, 215, 80, 40 ), "Delete", "box" );
 			}
 		}
 		else
 		{
-			GUI.Label ( new Rect ( 65, 200, 80, 40 ), "Equip", "box" );
-			GUI.Label ( new Rect ( 155, 200, 80, 40 ), "Unequip", "box" );
-			GUI.Label ( new Rect ( 245, 200, 80, 40 ), "Delete", "box" );
+			GUI.Label ( new Rect ( 65, 215, 80, 40 ), "Equip", "box" );
+			GUI.Label ( new Rect ( 155, 215, 80, 40 ), "Unequip", "box" );
+			GUI.Label ( new Rect ( 245, 215, 80, 40 ), "Delete", "box" );
 		}
 	}
 
@@ -172,7 +179,7 @@ public class Inventory : MonoBehaviour {
 	{
 		ModifiedStats stats = GetComponent<ModifiedStats>();
 
-		int lvlToDisplay;
+		int lvlToDisplay = stats.level;
 		int dexToDisplay = stats.TotalDEX();
 		int strToDisplay = stats.TotalSTR();
 		int intToDisplay = stats.TotalINT();
@@ -180,6 +187,8 @@ public class Inventory : MonoBehaviour {
 		float dmgToDisplay = stats._baseDamage;
 
 		int cnt = 0;
+
+		berserkerTex = Resources.Load("Character2D/Berzerker Sprite") as Texture2D;
 
 		// Drawing the selection buttons to view different types of items in the inventory
 		for ( int topRow = 0; topRow < selectorRows; topRow++ )
@@ -240,12 +249,14 @@ public class Inventory : MonoBehaviour {
 			GUI.Label ( new Rect ( 200, 65, 50, buttonHeight ), "Weapon" );
 
 			GUI.Label ( new Rect ( 150, 145, 100, 25 ), "Player Stats", "box" );
-			GUI.Label ( new Rect ( 25, 180, 100, 25 ), "Level: " );
+			GUI.Label ( new Rect ( 25, 180, 100, 25 ), "Level: " + lvlToDisplay );
 			GUI.Label ( new Rect ( 25, 195, 100, 25 ), "Dex: " + dexToDisplay );
 			GUI.Label ( new Rect ( 25, 210, 100, 25 ), "Str: " + strToDisplay );
 			GUI.Label ( new Rect ( 25, 225, 100, 25 ), "Int: " + intToDisplay );
 			GUI.Label ( new Rect ( 25, 240, 100, 25 ), "Defense: " + armorToDisplay );
 			GUI.Label ( new Rect ( 25, 255, 100, 25 ), "Damage: " + dmgToDisplay );
+
+			//GUI.DrawTexture ( new Rect ( 250, 180, berserkerTex.width, berserkerTex.height ), berserkerTex );
 
 			for ( int x = 0; x < equippedItems.Length; x++ )
 			{

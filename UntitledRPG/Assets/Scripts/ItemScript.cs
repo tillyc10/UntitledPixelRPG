@@ -12,6 +12,9 @@ public class ItemScript : ScriptableObject {
 	public int armorClass;
 	public Rarity rarity;
 	public Type type;
+
+	public int stackSize = 1;
+	public int maxStackSize = 99;
 	
 	public enum  Type {
 		helm,
