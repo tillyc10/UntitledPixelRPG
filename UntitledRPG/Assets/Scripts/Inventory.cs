@@ -85,7 +85,13 @@ public class Inventory : MonoBehaviour {
 
 			equippedItems[1] = completeItemList.commonArmor[0];
 			equippedItems[2] = completeItemList.commonArmor[1];
-			equippedItems[3] = completeItemList.commonWeapons[0];
+
+			if ( stats.bBer )
+				equippedItems[3] = completeItemList.commonWeapons[0];
+			else if ( stats.bNec )
+				equippedItems[3] = completeItemList.commonWeapons[1];
+			else if ( stats.bRan )
+				equippedItems[3] = completeItemList.commonWeapons[2];
 
 			for ( int x = 0; x < equippedItems.Length; x++ )
 			{
