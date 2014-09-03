@@ -11,6 +11,10 @@ public class ModifiedStats : MonoBehaviour{
 	public int expToLevel=20;
 	public int level;
 
+	public bool bBer;
+	public bool bNec;
+	public bool bRan;
+
 	public ModifiedStats()
 	{
 		_buffSTR = 0;
@@ -28,17 +32,17 @@ public class ModifiedStats : MonoBehaviour{
 		Ranger rSTR = GetComponent<Ranger>();
 		Necromancer nSTR = GetComponent<Necromancer>();
 
-		GameObject bClass = GameObject.FindGameObjectWithTag("Player");
+		//GameObject bClass = GameObject.FindGameObjectWithTag("Player");
 
-		if(bClass.GetComponent<CharacterSelect>().bBer==true)
+		if(bBer==true)
 		{
 			return _buffSTR+ bSTR.baseSTR;
 		}
-		else if(bClass.GetComponent<CharacterSelect>().bNec==true)
+		else if(bNec==true)
 		{
 			return _buffSTR + nSTR.baseSTR;
 		}
-		else if(bClass.GetComponent<CharacterSelect>().bRan==true)
+		else if(bRan==true)
 		{
 			return _buffSTR + rSTR.baseSTR;
 		}
@@ -53,17 +57,17 @@ public class ModifiedStats : MonoBehaviour{
 		Ranger rDEX = GetComponent<Ranger>();
 		Necromancer nDEX = GetComponent<Necromancer>();
 
-		GameObject bClass = GameObject.FindGameObjectWithTag("Player");
+		//GameObject bClass = GameObject.FindGameObjectWithTag("Player");
 		
-		if(bClass.GetComponent<CharacterSelect>().bBer)
+		if(bBer)
 		{
 			return _buffSTR+bDEX.baseDEX;
 		}
-		else if(bClass.GetComponent<CharacterSelect>().bNec)
+		else if(bNec)
 		{
 			return _buffSTR + nDEX.baseDEX;
 		}
-		else if(bClass.GetComponent<CharacterSelect>().bRan)
+		else if(bRan)
 		{
 			return _buffSTR + rDEX.baseDEX;
 		}
@@ -79,17 +83,17 @@ public class ModifiedStats : MonoBehaviour{
 		Ranger rINT = GetComponent<Ranger>();
 		Necromancer nINT = GetComponent<Necromancer>();
 
-		GameObject bClass = GameObject.FindGameObjectWithTag("Player");
+		//GameObject bClass = GameObject.FindGameObjectWithTag("Player");
 		
-		if(bClass.GetComponent<CharacterSelect>().bBer)
+		if(bBer)
 		{
 			return _buffSTR + bINT.baseINT;
 		}
-		else if(bClass.GetComponent<CharacterSelect>().bNec)
+		else if(bNec)
 		{
 			return _buffSTR + nINT.baseINT;
 		}
-		else if(bClass.GetComponent<CharacterSelect>().bRan)
+		else if(bRan)
 		{
 			return _buffSTR + rINT.baseINT;
 		}
