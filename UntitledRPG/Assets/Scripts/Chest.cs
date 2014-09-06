@@ -72,20 +72,27 @@ public class Chest : MonoBehaviour {
 					{
 						if ( player.weapons.Count > 0 )
 						{
+							bool haveIt = false;
+							int count = 0;
+
 							for ( int x = 0; x < player.weapons.Count; x++ )
 							{
+								count++;
+
 								if ( player.weapons[x].Name == itemToSpawn.Name )
 								{
 									if ( player.weapons[x].stackSize < player.weapons[x].maxStackSize )
 										player.weapons[x].stackSize++;
 
+									haveIt = true;
+
 									x = player.weapons.Count;
 								}
-								else
-								{
-									if ( x == player.weapons.Count - 1 )
-										player.weapons.Add(itemToSpawn);
-								}
+							}
+
+							if ( count == player.weapons.Count && !haveIt )
+							{
+								player.weapons.Add(itemToSpawn);
 							}
 						}
 						else
@@ -95,20 +102,27 @@ public class Chest : MonoBehaviour {
 					{
 						if ( player.armor.Count > 0 )
 						{
+							bool haveIt = false;
+							int count = 0;
+
 							for ( int x = 0; x < player.armor.Count; x++ )
 							{
+								count++;
+
 								if ( player.armor[x].Name == itemToSpawn.Name )
 								{
-									if ( player.weapons[x].stackSize < player.weapons[x].maxStackSize )
+									if ( player.armor[x].stackSize < player.armor[x].maxStackSize )
 										player.armor[x].stackSize++;
+
+									haveIt = true;
 
 									x = player.armor.Count;
 								}
-								else
-								{
-									if ( x == player.armor.Count - 1 )
-										player.armor.Add(itemToSpawn);
-								}
+							}
+
+							if ( count == player.armor.Count && !haveIt )
+							{
+								player.armor.Add(itemToSpawn);
 							}
 						}
 						else
