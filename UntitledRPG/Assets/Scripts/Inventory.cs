@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour {
 	// Size of the inventory window
 	private Rect inventoryWindowRect = new Rect((Screen.width * 0.25f) - 200, (Screen.height * 0.5f) - 160, 400, 320);
 	private Rect descriptionWindowRect = new Rect((Screen.width * 0.75f) - 200, (Screen.height * 0.5f) - 160, 400, 320);
+	private Rect deleteWindowRect = new Rect((Screen.width * 0.5f) - 100, (Screen.height * 0.5f) - 90, 200, 180);
 
 	// Width and Height of the item buttons
 	public float buttonWidth = 40;
@@ -28,6 +29,11 @@ public class Inventory : MonoBehaviour {
 
 	private bool displayDescription;
 	private const int DescriptionWIndowID = 1;
+
+	private bool displayDelete;
+	private const int DeleteWindowID = 2;
+	private int amountToDelete = 1;
+	private string amountToDeleteString = "0";
 
 	// Lists to hold current inventory based on item type
 	public List<ItemScript> items = new List<ItemScript>();
@@ -127,6 +133,33 @@ public class Inventory : MonoBehaviour {
 		{
 			inventoryWindowRect = GUI.Window(InventoryWindowID, inventoryWindowRect, InventoryWindow, "Inventory");
 			descriptionWindowRect = GUI.Window (DescriptionWIndowID, descriptionWindowRect, DescriptionWindow, "Item");
+
+			if ( displayDelete )
+				deleteWindowRect = GUI.Window (DeleteWindowID, deleteWindowRect, DeleteItemWindow, "Delete");
+		}
+	}
+
+	public void DeleteItemWindow( int ID )
+	{
+		if ( clickedItem != null )
+		{
+			GUI.Label ( new Rect ( 10, 15, 200, 50 ), "Name: " + clickedItem.Name );
+			GUI.Label ( new Rect ( 10, 30, 200, 50 ), "Amount Held: " + clickedItem.stackSize );
+			GUI.Label ( new Rect ( 10, 45, 200, 50 ), "Amount To Delete: " );
+
+			amountToDeleteString = GUI.TextField ( new Rect ( 125, 46, 25, 20 ), amountToDeleteString );
+
+			if ( GUI.Button ( new Rect ( 60, 75, 80, 40 ), "Delete" ) )
+			{
+				print ( "pressed" );
+				amountToDelete = System.Int32.Parse(amountToDeleteString);
+				Delete( amountToDelete );
+			}
+
+			if ( GUI.Button ( new Rect ( 60, 120, 80, 40 ), "Cancel" ) )
+			{
+				displayDelete = false;
+			}
 		}
 	}
 
@@ -159,7 +192,11 @@ public class Inventory : MonoBehaviour {
 					//print ( "equipped" );
 				}
 				GUI.Label ( new Rect ( 155, 215, 80, 40 ), "Unequip", "box" );
-				GUI.Button ( new Rect ( 245, 215, 80, 40 ), "Delete" );
+
+				if ( GUI.Button ( new Rect ( 245, 215, 80, 40 ), "Delete" ) )
+				{
+					displayDelete = true;
+				}
 			}
 			else
 			{
@@ -244,6 +281,7 @@ public class Inventory : MonoBehaviour {
 				}
 
 				clickedItem = null;
+				displayDelete = false;
 				//placeInList = null;
 			}
 		}
@@ -275,6 +313,7 @@ public class Inventory : MonoBehaviour {
 						{
 							clickedItem = equippedItems[x];
 							placeInList = x;
+							displayDelete = false;
 						}
 					}
 					else
@@ -283,6 +322,7 @@ public class Inventory : MonoBehaviour {
 						{
 							clickedItem = equippedItems[x];
 							placeInList = x;
+							displayDelete = false;
 						}
 					}
 				}
@@ -334,6 +374,7 @@ public class Inventory : MonoBehaviour {
 						{
 							clickedItem = armor[x + y * inventoryCols];
 							placeInList = x + y * inventoryCols;
+							displayDelete = false;
 							//print ( placeInList );
 						}
 					}
@@ -360,6 +401,7 @@ public class Inventory : MonoBehaviour {
 						{
 							clickedItem = weapons[x + y * inventoryCols];
 							placeInList = x + y * inventoryCols;
+							displayDelete = false;
 						}
 					}
 					// we dont have items to show
@@ -499,9 +541,38 @@ public class Inventory : MonoBehaviour {
 
 	// ------------------------------------------------------------------------------------------------------------
 	// 
-	public void Delete()
+	public void Delete(int amountToRemove)
 	{
+		if ( amountToRemove > 0 )
+		{
+			if ( clickedItem.stackSize > amountToRemove )
+			{
+				print ( amountToRemove );
 
+				if ( clickedItem.stackSize == 1 )
+				{
+					if ( clickedItem.type == ItemScript.Type.weapon )
+						weapons.Remove( clickedItem );
+					else
+						armor.Remove( clickedItem );
+				}
+				else
+					clickedItem.stackSize -= amountToRemove;
+
+				clickedItem = null;
+				displayDelete = false;
+			}
+			else if ( clickedItem.stackSize == amountToRemove )
+			{
+				if ( clickedItem.type == ItemScript.Type.weapon )
+					weapons.Remove( clickedItem );
+				else
+					armor.Remove( clickedItem );
+
+				clickedItem = null;
+				displayDelete = false;
+			}
+		}
 	}
 
 	// ------------------------------------------------------------------------------------------------------------
