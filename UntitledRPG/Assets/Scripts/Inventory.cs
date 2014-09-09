@@ -418,13 +418,6 @@ public class Inventory : MonoBehaviour {
 	// Move armor from inventory to equipped items
 	public void EquipArmor(int which)
 	{
-		ModifiedStats stats = GetComponent<ModifiedStats>();
-
-		int dexBuff = 0;
-		int strBuff = 0;
-		int intBuff = 0;
-		int armorBuff = 0;
-
 		// place the armor in the appropriate slot, here we should also
 		// move the equipped armor to the armor inventory
 		if ( clickedItem.type == ItemScript.Type.helm )
@@ -455,23 +448,7 @@ public class Inventory : MonoBehaviour {
 			armor.Remove ( armor[which] );
 		}
 
-		//equippedCount += 1;
-
-		for ( int x = 0; x < equippedItems.Length; x++ )
-		{
-			if ( equippedItems[x] != null )
-			{
-				dexBuff += equippedItems[x].dexBoost;
-				strBuff += equippedItems[x].strBoost;
-				intBuff += equippedItems[x].intBoost;
-				armorBuff += equippedItems[x].armorClass;
-			}
-		}
-
-		stats._buffDEX = dexBuff;
-		stats._buffSTR = strBuff;
-		stats._buffINT = intBuff;
-		stats._armorClass = armorBuff;
+		TallyStatBuffs();
 
 		//print ( "Dex Buff is " + stats._buffDEX );
 		//print ( "Armor Buff is " + stats._armorClass );
@@ -481,8 +458,6 @@ public class Inventory : MonoBehaviour {
 	// Move weapon from inventory to equipped items
 	public void EquipWeapon(int which)
 	{
-		ModifiedStats stats = GetComponent<ModifiedStats>();
-
 		if ( clickedItem.type == ItemScript.Type.weapon )
 		{
 			if ( equippedItems[3] != null )
@@ -491,19 +466,13 @@ public class Inventory : MonoBehaviour {
 			equippedItems[3] = clickedItem;
 			clickedItem = null;
 			weapons.Remove( weapons[which] );
-			stats._baseDamage = equippedItems[3].damage; 
+
+			TallyStatBuffs();
 		}
 	}
 
 	public void Unequip(int which)
 	{
-		ModifiedStats stats = GetComponent<ModifiedStats>();
-		
-		int dexBuff = 0;
-		int strBuff = 0;
-		int intBuff = 0;
-		int armorBuff = 0;
-
 		if ( clickedItem.type == ItemScript.Type.weapon )
 		{
 			weapons.Add( clickedItem );
@@ -517,26 +486,7 @@ public class Inventory : MonoBehaviour {
 			clickedItem = null;
 		}
 
-		for ( int x = 0; x < equippedItems.Length; x++ )
-		{
-			if ( equippedItems[x] != null )
-			{
-				dexBuff += equippedItems[x].dexBoost;
-				strBuff += equippedItems[x].strBoost;
-				intBuff += equippedItems[x].intBoost;
-				armorBuff += equippedItems[x].armorClass;
-			}
-		}
-		
-		stats._buffDEX = dexBuff;
-		stats._buffSTR = strBuff;
-		stats._buffINT = intBuff;
-		stats._armorClass = armorBuff;
-
-		if ( equippedItems[3] != null )
-			stats._baseDamage = equippedItems[3].damage;
-		else
-			stats._baseDamage = 0;
+		TallyStatBuffs();
 	}
 
 	// ------------------------------------------------------------------------------------------------------------
@@ -573,6 +523,37 @@ public class Inventory : MonoBehaviour {
 				displayDelete = false;
 			}
 		}
+	}
+
+	public void TallyStatBuffs()
+	{
+		ModifiedStats stats = GetComponent<ModifiedStats>();
+		
+		int dexBuff = 0;
+		int strBuff = 0;
+		int intBuff = 0;
+		int armorBuff = 0;
+
+		for ( int x = 0; x < equippedItems.Length; x++ )
+		{
+			if ( equippedItems[x] != null )
+			{
+				dexBuff += equippedItems[x].dexBoost;
+				strBuff += equippedItems[x].strBoost;
+				intBuff += equippedItems[x].intBoost;
+				armorBuff += equippedItems[x].armorClass;
+			}
+		}
+		
+		stats._buffDEX = dexBuff;
+		stats._buffSTR = strBuff;
+		stats._buffINT = intBuff;
+		stats._armorClass = armorBuff;
+		
+		if ( equippedItems[3] != null )
+			stats._baseDamage = equippedItems[3].damage;
+		else
+			stats._baseDamage = 0;
 	}
 
 	// ------------------------------------------------------------------------------------------------------------
