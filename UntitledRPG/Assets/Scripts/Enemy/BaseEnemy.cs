@@ -18,6 +18,7 @@ public class BaseEnemy : MonoBehaviour
 
 	public int enemyDefense;
 	public int enemyGold;
+	public int enemyXp;
 	public string enemyType;
 		
 }
