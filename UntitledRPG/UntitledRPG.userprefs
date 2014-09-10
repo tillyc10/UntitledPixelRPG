@@ -1,8 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\Space-Brawler\Client\Assets\Plugins\MiniJSON.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerMovement.cs">
     <Files>
-      <File FileName="..\..\Space-Brawler\Client\Assets\Plugins\MiniJSON.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerMovement.cs" Line="119" Column="1" />
+      <File FileName="Assets\Scripts\Enemy\EnemiesList.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemy\BaseEnemy.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerMovement.cs" Line="23" Column="2" />
+      <File FileName="Assets\Scripts\Combat\CombatHUD.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Combat\CombatStateMachine.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Teleport.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Item.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GenericNPC.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
