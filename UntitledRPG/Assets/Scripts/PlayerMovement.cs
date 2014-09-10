@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
 	private float recentPress;
 	private float playerWalking;
 	public Transform Hero;
+
 	// Enemy Arrays
 	public string[] zoneOneEnemies = new string[4];
 	public string[] zoneTwoEnemies = new string[3];
@@ -20,9 +21,11 @@ public class PlayerMovement : MonoBehaviour {
 	public string[] zoneNineEnemies = new string[3];
 	public string[] zoneTenEnemies = new string[3];
 	public string[] zoneElevenEnemies = new string[3];
-	public string[] zoneTweleveEnemies = new string[3];
+	public string[] zoneTwelveEnemies = new string[3];
 	public string[] zoneThirteenEnemies = new string[3];
 	public string[] zoneFourteenEnemies = new string[3];
+	
+	private float timeWalking;
 
 	void Awake ()
 	{
@@ -166,7 +169,7 @@ public class PlayerMovement : MonoBehaviour {
 
 		rigidbody2D.rotation = 0;
 
-		if (rigidbody2D.velocity > 0) 
+		if (rigidbody2D.velocity.x != 0 || rigidbody2D.velocity.y != 0) 
 		{
 			timeWalking += Time.deltaTime;
 		}
@@ -176,27 +179,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		/*MovePlayer ();
-
-		float moveHorizontal = Input.GetAxis ("Horizontal");
-		float moveVertical = Input.GetAxis ("Vertical");
-
-		if (moveHorizontal > 0 || moveHorizontal < 0) 
-		{
-			moveVertical = 0.0f;
-		}
-
-		if (moveVertical > 0 || moveVertical < 0) 
-		{
-			moveHorizontal = 0.0f;
-		}
-
-		Vector3 movement = new Vector3 (moveHorizontal, moveVertical, 0.0f);
-
-			
-
-		rigidbody2D.velocity = movement * walkSpeed;
-		rigidbody2D.rotation = 0;*/
+		MovePlayer ();
 	}
 
 }
