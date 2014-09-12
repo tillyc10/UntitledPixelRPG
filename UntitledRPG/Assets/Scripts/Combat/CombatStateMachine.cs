@@ -1,77 +1,90 @@
 using UnityEngine;
 using System.Collections;
 
-public class CombatStateMachine : MonoBehaviour 
-{
-	private bool hasAddedXP = false;
-	private BattleStateStart battleStateStartScript = new BattleStateStart();
+public class CombatStateMachine : MonoBehaviour {
 
-	public enum BattleStates 
-	{
+
+	public enum BattleStates {
 		START,
 		PLAYERCHOICE,
+		PLAYERANIMATE,
 		ENEMYCHOICE,
-		CALCDAMAGE,
-		ITEM,
-		CLEANSE,
-		RUN,
+		ENEMYANIMATE,
 		LOSE,
 		WIN
 	}
 		
 	private BattleStates currentState;
 
+	void Awake (){
+		currentState = BattleStates.START;
+	}
 
-		// Use this for initialization
-		void Start ()
-		{
-			hasAddedXP = false;
-			currentState = BattleStates.START;
-		}
-	
-		// Update is called once per frame
-		void Update ()
-		{
+	void Start (){
+		//currentState = BattleStates.START;
+	}
+
+
+	void Update (){
 		Debug.Log (currentState);
+		switch (currentState) {
+		case(BattleStates.START):
 
-			switch (currentState) {
-				case (BattleStates.START):
-				// Setup Battle Function Here
-				// creates enemy
+			//Setup battle function HERE
+			if(currentState == BattleStates.START){
+				currentState = BattleStates.PLAYERCHOICE;
+			}
+			break;
 
-						break;
-				
-				case (BattleStates.PLAYERCHOICE): // player choses attack
-						break;
-				
-				case (BattleStates.ENEMYCHOICE): // Need to create the enemy AI
-						break;
+		case(BattleStates.PLAYERCHOICE):
+			//Attacks and players options go HERE.
+			break;
 
-				case (BattleStates.CALCDAMAGE): // calculate damage done taking in consideration the attack and stats
-						break;
+		case(BattleStates.PLAYERANIMATE):
+			break;
 
-				case (BattleStates.ITEM):
-						break;
+		case(BattleStates.ENEMYCHOICE):
+			break;
 
-				case (BattleStates.CLEANSE):
-						break;
-					
-				case (BattleStates.RUN):
-						break;
-						
-				case (BattleStates.LOSE):
-						break;
+		case(BattleStates.ENEMYANIMATE):
+			break;
 
-				case (BattleStates.WIN):
-				// need to add this but these dont exist elsewhere yet
-					//if (!hasAddedXP)
-					//{
-						//IncreaseExperience.AddExperience();
-						// hasAddedXP = True
-					//}
-						break;
+		case(BattleStates.LOSE):
+			break;
 
+		case(BattleStates.WIN):
+			break;
+		}
+	}
+
+
+	void OnGUI() {
+		
+		if (GUI.Button (new Rect (350, 390, 700, 50), "Attack 1")) {
+			if(currentState == BattleStates.PLAYERCHOICE){
+				currentState = BattleStates.PLAYERANIMATE;
+			}
+			print ("attack 1");
+		}
+		if (GUI.Button (new Rect (350, 445, 700, 50), "Attack 2")) {
+			if(currentState == BattleStates.PLAYERCHOICE){
+				currentState = BattleStates.PLAYERANIMATE;
+			}
+			print ("attack 2");
+		}
+		if (GUI.Button (new Rect (350, 500, 700, 50), "Attack 3")) {
+			if(currentState == BattleStates.PLAYERCHOICE){
+				currentState = BattleStates.PLAYERANIMATE;
+			}
+			print ("attack 3");
+		}
+		if (GUI.Button (new Rect (350, 555, 700, 50), "Attack 4")) {
+			if(currentState == BattleStates.PLAYERCHOICE){
+				currentState = BattleStates.PLAYERANIMATE;
+			}
+			print ("attack 4");
 		}
 	}
 }
+
 

@@ -17,7 +17,7 @@ public class CombatHUD : MonoBehaviour {
 	void Update () {
 
 	}
-	void OnGUI() {
+	/*void OnGUI() {
 
 
 		if (GUI.Button (new Rect (350, 390, 700, 50), "Attack 1")) {
@@ -32,5 +32,7 @@ public class CombatHUD : MonoBehaviour {
 		if (GUI.Button (new Rect (350, 555, 700, 50), "Attack 4")) {
 					print ("attack 4");
 				}
+
 	}
+	*/
 }
