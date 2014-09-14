@@ -23,7 +23,7 @@ public class GenericNPC : MonoBehaviour {
 	private Rect npcWindowRect = new Rect((Screen.width * 0.5f) - 200, (Screen.height * 0.75f), 400, 75);
 	private const int NPCWindowID = 0;
 
-	private Rect shopWindowRect = new Rect((Screen.width * 0.75f) - 200, (Screen.height * 0.5f) - 160, 400, 320);
+	private Rect shopWindowRect = new Rect((Screen.width * 0.75f) - 150, (Screen.height * 0.5f) - 160, 300, 320);
 	private const int ShopWindowID = 1;
 
 	private Rect questWindowRect = new Rect((Screen.width * 0.75f) - 100, (Screen.height * 0.5f) - 160, 200, 320);
@@ -246,12 +246,24 @@ public class GenericNPC : MonoBehaviour {
 	{
 		if ( GUI.Button ( new Rect ( shopWindowRect.width * 0.2f - 40, npcWindowRect.height * 0.8f - 15, 80, 40 ), "Buy" ) )
 		{
-
+			bBuying = true;
+			bSelling = false;
 		}
 
 		if ( GUI.Button ( new Rect ( shopWindowRect.width * 0.8f - 40, npcWindowRect.height * 0.8f - 15, 80, 40 ), "Sell" ) )
 		{
-			
+			bSelling = true;
+			bBuying = false;
+		}
+
+		if ( bBuying )
+		{
+
+		}
+
+		if ( bSelling )
+		{
+
 		}
 	}
 
