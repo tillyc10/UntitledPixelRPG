@@ -46,7 +46,7 @@ public class Inventory : MonoBehaviour {
 	// Array to hold the equipped items - 0 = helm, 1 = chest, 2 = legs, 3 = weapon
 	public ItemScript[] equippedItems = new ItemScript[4];
 	private int equippedCount;
-	private bool initialEquip;
+	public bool initialEquip;
 	private float timeToLoad;
 	private float timeToEquip = 1;
 
