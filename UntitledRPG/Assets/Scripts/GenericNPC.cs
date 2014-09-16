@@ -26,12 +26,14 @@ public class GenericNPC : MonoBehaviour {
 
 	public int numberOfQuests;
 	public string[] questDialouges;
+	public string[] questAcceptedDialouges;
+	private bool[] questAccepted;
 
-	public int shopRows = 4;
-	public int shopCols = 4;
+	private int shopRows = 4;
+	private int shopCols = 4;
 
-	public int inventoryRows = 6;
-	public int inventoryCols = 9;
+	private int inventoryRows = 6;
+	private int inventoryCols = 9;
 
 	//----------------------------------------------------------------------------------------------------------------------------
 	// Window Variables
@@ -47,7 +49,7 @@ public class GenericNPC : MonoBehaviour {
 	private Rect inventoryWindowRect = new Rect((Screen.width * 0.25f) - 200, (Screen.height * 0.5f) - 160, 400, 320);
 	private const int InventoryWindowID = 3;
 
-	private Rect descriptionWindowRect = new Rect((Screen.width * 0.75f) - 200, (Screen.height * 0.5f) - 160, 400, 320);
+	private Rect descriptionWindowRect = new Rect((Screen.width * 0.5f) - 100, (Screen.height * 0.5f) - 90, 200, 180);
 	private const int DescriptionWindowID = 4;
 
 	private Rect sellWindowRect = new Rect((Screen.width * 0.5f) - 100, (Screen.height * 0.5f) - 90, 200, 180);
@@ -71,6 +73,8 @@ public class GenericNPC : MonoBehaviour {
 
 	private bool bConversation;
 	private bool bQuestGiving;
+	private bool bQuestDialouge;
+
 	private bool bShopping;
 	private bool bSelling;
 	private bool bBuying;
@@ -84,6 +88,11 @@ public class GenericNPC : MonoBehaviour {
 	//----------------------------------------------------------------------------------------------------------------------------
 	// Private Ints
 	private int buttonsToDraw = 0;
+	private int placeInList;
+	private int chosenQuest;
+
+	#region
+	#endregion
 
 	//----------------------------------------------------------------------------------------------------------------------------
 	// Use this for initialization
@@ -92,6 +101,8 @@ public class GenericNPC : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerInventory = player.GetComponent<Inventory>();
 		itemList = player.GetComponent<Item>();
+
+		questAccepted = new bool[numberOfQuests];
 
 		if ( bShop && bQuestGiver )
 		{
@@ -115,7 +126,7 @@ public class GenericNPC : MonoBehaviour {
 		}
 	
 	}
-
+	
 	//----------------------------------------------------------------------------------------------------------------------------
 	public void SetShop()
 	{
@@ -173,6 +184,8 @@ public class GenericNPC : MonoBehaviour {
 			showWeapons = false;
 			showArmor = false;
 			showItems = false;
+
+			bQuestDialouge = false;
 
 			clickedItem = null;
 		}
@@ -235,6 +248,11 @@ public class GenericNPC : MonoBehaviour {
 				{
 					// Begin giving quests
 					questWindowRect = GUI.Window (QuestWindowID, questWindowRect, QuestWindow, "Quest" );
+
+					if ( bQuestDialouge )
+					{
+						descriptionWindowRect = GUI.Window ( DescriptionWindowID, descriptionWindowRect, DescriptionWindow, "Quest" );
+					}
 				}
 			}
 		}
@@ -251,6 +269,7 @@ public class GenericNPC : MonoBehaviour {
 				bQuestGiving = false;
 				bShopping = false;
 				bConversation = true;
+				bQuestDialouge = false;
 				clickedItem = null;
 
 				showWeapons = false;
@@ -266,6 +285,7 @@ public class GenericNPC : MonoBehaviour {
 				bQuestGiving = false;
 				bShopping = false;
 				bConversation = true;
+				bQuestDialouge = false;
 				clickedItem = null;
 
 				showWeapons = false;
@@ -278,6 +298,7 @@ public class GenericNPC : MonoBehaviour {
 				bConversation = false;
 				bQuestGiving = false;
 				bShopping = true;
+				bQuestDialouge = false;
 				clickedItem = null;
 
 				showWeapons = false;
@@ -294,6 +315,7 @@ public class GenericNPC : MonoBehaviour {
 				bQuestGiving = false;
 				bShopping = false;
 				bConversation = true;
+				bQuestDialouge = false;
 				clickedItem = null;
 
 				showWeapons = false;
@@ -306,6 +328,7 @@ public class GenericNPC : MonoBehaviour {
 				bConversation = false;
 				bShopping = false;
 				bQuestGiving = true;
+				bQuestDialouge = false;
 				clickedItem = null;
 
 				showWeapons = false;
@@ -321,6 +344,7 @@ public class GenericNPC : MonoBehaviour {
 				bQuestGiving = false;
 				bShopping = false;
 				bConversation = true;
+				bQuestDialouge = false;
 				clickedItem = null;
 
 				showWeapons = false;
@@ -333,6 +357,7 @@ public class GenericNPC : MonoBehaviour {
 				bConversation = false;
 				bQuestGiving = false;
 				bShopping = true;
+				bQuestDialouge = false;
 				clickedItem = null;
 
 				showWeapons = false;
@@ -345,6 +370,7 @@ public class GenericNPC : MonoBehaviour {
 				bConversation = false;
 				bShopping = false;
 				bQuestGiving = true;
+				bQuestDialouge = false;
 				clickedItem = null;
 
 				showWeapons = false;
@@ -436,7 +462,8 @@ public class GenericNPC : MonoBehaviour {
 		{
 			if ( GUI.Button ( new Rect (questWindowRect.width * 0.5f - 40, 30 + (x * 50), 80, 40 ), "Quest " + (x+1) ) )
 			{
-
+				bQuestDialouge = true;
+				chosenQuest = x;
 			}
 		}
 	}
@@ -482,6 +509,7 @@ public class GenericNPC : MonoBehaviour {
 						if ( GUI.Button ( new Rect(20 + (x * 40), 70 + (y * 40), 40, 40 ), ( x + y * inventoryCols).ToString()) )
 						{
 							clickedItem = playerInventory.weapons[x + y * inventoryCols];
+							placeInList = x + y * inventoryCols;
 						}
 					}
 					// we dont have items to show
@@ -505,6 +533,7 @@ public class GenericNPC : MonoBehaviour {
 						if ( GUI.Button ( new Rect(20 + (x * 40), 70 + (y * 40), 40, 40 ), ( x + y * inventoryCols).ToString()) )
 						{
 							clickedItem = playerInventory.armor[x + y * inventoryCols];
+							placeInList = x + y * inventoryCols;
 						}
 					}
 					// we dont have items to show
@@ -528,6 +557,7 @@ public class GenericNPC : MonoBehaviour {
 						if ( GUI.Button ( new Rect(20 + (x * 40), 70 + (y * 40), 40, 40 ), ( x + y * inventoryCols).ToString()) )
 						{
 							clickedItem = playerInventory.items[x + y * inventoryCols];
+							placeInList = x + y * inventoryCols;
 						}
 					}
 					// we dont have items to show
@@ -544,6 +574,20 @@ public class GenericNPC : MonoBehaviour {
 	public void DescriptionWindow(int ID)
 	{
 
+		if ( !questAccepted[chosenQuest] )
+			GUI.Label ( new Rect ( 10, 15, 200, 100 ), questDialouges[chosenQuest] );
+		else
+			GUI.Label ( new Rect ( 10, 15, 200, 100 ), questAcceptedDialouges[chosenQuest] );
+
+		if ( GUI.Button ( new Rect ( 60, 75, 80, 40 ), "Yes" ) )
+		{
+			questAccepted[chosenQuest] = true;
+		}
+		
+		if ( GUI.Button ( new Rect ( 60, 120, 80, 40 ), "No" ) )
+		{
+			bQuestDialouge = false;
+		}
 	}
 
 	//----------------------------------------------------------------------------------------------------------------------------
@@ -579,6 +623,13 @@ public class GenericNPC : MonoBehaviour {
 				
 				if ( GUI.Button ( new Rect ( 60, 75, 80, 40 ), "Sell" ) )
 				{
+					if ( clickedItem.type == ItemScript.Type.weapon )
+					{
+						playerInventory.weapons.Remove( playerInventory.weapons[placeInList] ); 
+					}
+					else
+						playerInventory.armor.Remove( playerInventory.armor[placeInList] );
+
 					clickedItem = null;
 				}
 				
